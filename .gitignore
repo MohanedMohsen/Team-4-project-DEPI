@@ -1,0 +1,27 @@
+# Visual Studio temporary files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build output
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# IDE files
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# User-specific files
+*.cache
+
+# Secrets and local configuration
+appsettings.Development.json
