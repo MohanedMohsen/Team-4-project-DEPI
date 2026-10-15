@@ -11,5 +11,8 @@ namespace EducationalManagementSystem.Models
 
         public ICollection<Course> AssignedCourses { get; set; }
             = new List<Course>();
+
+        public ICollection<Assignment> Assignments { get; set; }
+            = new List<Assignment>();
     }
 }

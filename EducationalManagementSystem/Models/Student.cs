@@ -9,7 +9,7 @@ namespace EducationalManagementSystem.Models
     {
         public override UserRole Role => UserRole.Student;
 
-        public string? StudentNumber { get; set; }
+        public int AcademicYear { get; set; } = 1;
 
         public ICollection<Course> EnrolledCourses { get; set; }
             = new List<Course>();

@@ -18,6 +18,8 @@ namespace EducationalManagementSystem.Models
 
         public decimal MaxGrade { get; set; }
 
+        public int DoctorCreatorId { get; set; }
+
         public DateTime? DueDate { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
