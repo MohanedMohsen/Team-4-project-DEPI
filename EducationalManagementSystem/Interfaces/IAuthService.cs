@@ -7,15 +7,15 @@ namespace EducationalManagementSystem.Interfaces
 {
     public interface IAuthService
     {
-        bool CreateAccount(User user);
+        // SignUp by full name and email
+        (string? UserId , string? tempPassword) SignUp(string FullName , string email);
 
         User? Login(string username, string password);
 
-        bool ChangePassword(
-            int userId,
-            string currentPassword,
-            string newPassword);
+        bool ChangePassword( int userId, string currentPassword, string newPassword);
 
+        bool IsValidPassword(string password);
         bool ValidateUser(User user);
     }
 }
+    
