@@ -1,7 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace EducationalManagementSystem.Interfaces
 {
     public interface ICommunicationService
@@ -15,5 +11,9 @@ namespace EducationalManagementSystem.Interfaces
         bool SendNotification(
             int studentId,
             string message);
+
+        void DisplayAnnouncements();
+
+        void DisplayNotifications(int studentId);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace EducationalManagementSystem
+namespace EducationalManagementSystem
 {
     internal class Program
     {
