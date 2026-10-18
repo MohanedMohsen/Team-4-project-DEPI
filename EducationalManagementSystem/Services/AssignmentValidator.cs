@@ -1,4 +1,5 @@
 using EducationalManagementSystem.Models;
+using EducationalManagementSystem.Interfaces;
 
 namespace EducationalManagementSystem.Services;
 

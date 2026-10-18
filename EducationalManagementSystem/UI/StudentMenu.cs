@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EducationalManagementSystem.Interfaces;
+using EducationalManagementSystem.Models;
 
-namespace EducationalManagementSystem.UI
-{
-    internal class StudentMenu
-    {
-    }
-}
+namespace EducationalManagementSystem.UI;
+

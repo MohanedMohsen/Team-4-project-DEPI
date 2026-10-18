@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace EducationalManagementSystem.UI;
 
-namespace EducationalManagementSystem.UI
+public static class ConsoleHelper
 {
-    internal class ConsoleHelper
-    {
-    }
+    
 }
