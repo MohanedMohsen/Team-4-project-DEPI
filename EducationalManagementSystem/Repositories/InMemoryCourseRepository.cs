@@ -1,146 +1,196 @@
-﻿using EducationalManagementSystem.Interfaces;
+using System.Collections;
+using EducationalManagementSystem.Interfaces;
 using EducationalManagementSystem.Models;
-using System;
-using System.Collections.Generic;
 
-namespace EducationalManagementSystem.Repositories
+namespace EducationalManagementSystem.Repositories;
+
+public sealed class InMemoryCourseRepository : ICourseRepository
 {
-    public sealed class InMemoryCourseRepository : ICourseRepository
+    private readonly ArrayList _courses = new ArrayList();
+    private readonly IUserRepository _userRepository;
+    private int _nextId = 1;
+
+    public InMemoryCourseRepository(IUserRepository userRepository)
     {
-        private readonly List<Course> _courses = new List<Course>();
-        private int _nextId = 1;
+        _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+    }
 
-        public bool AddCourse(Course course)
-        {
-            if (course is null) return false;
+    public void Add(Course course)
+    {
+        AddCourse(course);
+    }
 
-            if (course.Id > 0)
-            {
-                foreach (var item in _courses)
-                {
-                    if (item.Id == course.Id) return false;
-                }
-            }
+    public Course? GetById(int id)
+    {
+        return GetCourseById(id);
+    }
 
-            course.Id = course.Id > 0 ? course.Id : _nextId++;
+    public IEnumerable<Course> GetAll()
+    {
+        return GetAllCourses();
+    }
 
-            int maxId = 0;
-            foreach (var item in _courses)
-            {
-                if (item.Id > maxId) maxId = item.Id;
-            }
-            _nextId = Math.Max(_nextId, maxId + 2);
+    public void Update(Course course)
+    {
+        UpdateCourse(course);
+    }
 
-            _courses.Add(course);
-            return true;
-        }
+    public void Delete(int id)
+    {
+        DeleteCourse(id);
+    }
 
-        public Course? GetCourseById(int courseId)
-        {
-            foreach (var item in _courses)
-            {
-                if (item.Id == courseId)
-                {
-                    return item;
-                }
-            }
-            return null;
-        }
-
-        public List<Course> GetAllCourses()
-        {
-            List<Course> list = new List<Course>();
-            foreach (var item in _courses)
-            {
-                list.Add(item);
-            }
-            return list;
-        }
-
-        public bool UpdateCourse(Course course)
-        {
-            if (course is null || course.Id <= 0) return false;
-
-            int index = -1;
-            for (int i = 0; i < _courses.Count; i++)
-            {
-                if (_courses[i].Id == course.Id)
-                {
-                    index = i;
-                    break;
-                }
-            }
-
-            if (index < 0) return false;
-
-            _courses[index] = course;
-            return true;
-        }
-
-        public bool DeleteCourse(int courseId)
-        {
-            var course = GetCourseById(courseId);
-            if (course is null) return false;
-
-            return _courses.Remove(course);
-        }
-
-        public bool RegisterStudent(int studentId, int courseId)
-        {
-            var course = GetCourseById(courseId);
-            if (course is null || studentId <= 0) return false;
-
-           foreach (var student in course.RegisteredStudents)
-            {
-                if (student.Id == studentId) return false;
-            }
-
-            if (course.MaxStudents.HasValue &&
-                course.RegisteredStudents.Count >= course.MaxStudents.Value)
-                return false;
-
-            course.RegisteredStudents.Add(new Student { Id = studentId });
-            return true;
-        }
-
-        public bool AssignTeachingAssistant(int courseId, int assistantId)
-        {
-            var course = GetCourseById(courseId);
-            if (course is null || assistantId <= 0) return false;
-
-            foreach (var ta in course.TeachingAssistants)
-            {
-                if (ta.Id == assistantId) return false;
-            }
-
-            course.TeachingAssistants.Add(new TeachingAssistant { Id = assistantId });
-            return true;
-        }
-
-        public List<Course> GetCoursesByDoctor(int doctorId)
-        {
-            List<Course> doctorCourses = new List<Course>();
-            foreach (var course in _courses)
-            {
-                if (course.CreatedByDoctorId == doctorId)
-                {
-                    doctorCourses.Add(course);
-                }
-            }
-            return doctorCourses;
-        }
-
-        public bool IsStudentRegistered(int studentId, int courseId)
-        {
-            var course = GetCourseById(courseId);
-            if (course is null) return false;
-
-            foreach (var student in course.RegisteredStudents)
-            {
-                if (student.Id == studentId) return true;
-            }
-
+    public bool AddCourse(Course course)
+    {
+        if (course is null)
             return false;
+
+        foreach (Course item in _courses)
+        {
+            if (course.Id > 0 && item.Id == course.Id)
+                return false;
         }
+
+        if (course.Id <= 0)
+            course.Id = _nextId;
+
+        if (course.Id >= _nextId)
+            _nextId = course.Id + 1;
+
+        _courses.Add(course);
+        return true;
+    }
+
+    public Course? GetCourseById(int courseId)
+    {
+        foreach (Course course in _courses)
+        {
+            if (course.Id == courseId)
+                return course;
+        }
+
+        return null;
+    }
+
+    public List<Course> GetAllCourses()
+    {
+        List<Course> courses = new List<Course>();
+        foreach (Course course in _courses)
+            courses.Add(course);
+
+        return courses;
+    }
+
+    public bool UpdateCourse(Course course)
+    {
+        if (course is null || course.Id <= 0)
+            return false;
+
+        for (int index = 0; index < _courses.Count; index++)
+        {
+            Course existingCourse = (Course)_courses[index]!;
+            if (existingCourse.Id == course.Id)
+            {
+                existingCourse.Name = course.Name;
+                existingCourse.Code = course.Code;
+                existingCourse.Description = course.Description;
+                existingCourse.CreatedByDoctorId = course.CreatedByDoctorId;
+                existingCourse.CreatedByDoctor = course.CreatedByDoctor;
+                existingCourse.MaxStudents = course.MaxStudents;
+                existingCourse.RegistrationStartDate = course.RegistrationStartDate;
+                existingCourse.RegistrationEndDate = course.RegistrationEndDate;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool DeleteCourse(int courseId)
+    {
+        if (courseId <= 0)
+            return false;
+
+        for (int index = 0; index < _courses.Count; index++)
+        {
+            Course course = (Course)_courses[index]!;
+            if (course.Id == courseId)
+            {
+                _courses.RemoveAt(index);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool RegisterStudent(int studentId, int courseId)
+    {
+        Course? course = GetCourseById(courseId);
+        if (course is null || studentId <= 0)
+            return false;
+
+        foreach (Student student in course.RegisteredStudents)
+        {
+            if (student.Id == studentId)
+                return false;
+        }
+
+        if (course.MaxStudents.HasValue && course.RegisteredStudents.Count >= course.MaxStudents.Value)
+            return false;
+
+        User? user = _userRepository.GetUserByID(studentId);
+        if (user is not Student registeredStudent)
+            return false;
+
+        course.RegisteredStudents.Add(registeredStudent);
+        return true;
+    }
+
+    public bool AssignTeachingAssistant(int courseId, int assistantId)
+    {
+        Course? course = GetCourseById(courseId);
+        if (course is null || assistantId <= 0)
+            return false;
+
+        foreach (TeachingAssistant assistant in course.TeachingAssistants)
+        {
+            if (assistant.Id == assistantId)
+                return false;
+        }
+
+        User? user = _userRepository.GetUserByID(assistantId);
+        if (user is not TeachingAssistant teachingAssistant)
+            return false;
+
+        course.TeachingAssistants.Add(teachingAssistant);
+        return true;
+    }
+
+    public List<Course> GetCoursesByDoctor(int doctorId)
+    {
+        List<Course> courses = new List<Course>();
+        foreach (Course course in _courses)
+        {
+            if (course.CreatedByDoctorId == doctorId)
+                courses.Add(course);
+        }
+
+        return courses;
+    }
+
+    public bool IsStudentRegistered(int studentId, int courseId)
+    {
+        Course? course = GetCourseById(courseId);
+        if (course is null)
+            return false;
+
+        foreach (Student student in course.RegisteredStudents)
+        {
+            if (student.Id == studentId)
+                return true;
+        }
+
+        return false;
     }
 }

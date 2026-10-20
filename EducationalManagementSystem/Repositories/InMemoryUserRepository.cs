@@ -46,14 +46,14 @@ namespace EducationalManagementSystem.Repositories
         }
         public bool AddUser(User user)
         {
-            if (user == null || user.UserID) return false;
+            if (user == null || string.IsNullOrWhiteSpace(user.UserID)) return false;
             foreach(var usr in _users)
             {
                 if(usr.UserID != null)
                 {
                     string id1 = usr.UserID;
                     string id2 = user.UserID;
-                    if (id1 != id2) return false;
+                    if (id1 == id2) return false;
                 }
             }
             _users.Add(user);
@@ -63,7 +63,7 @@ namespace EducationalManagementSystem.Repositories
         {
             foreach(var user in _users)
             {
-                if(user.UserID == id)
+                if(user.Id == id)
                 {
                     return user;
                 }
@@ -75,9 +75,9 @@ namespace EducationalManagementSystem.Repositories
             int maxID = 0;
             foreach(var user in _users)
             {
-                if(user.UserID > maxID) maxID = user.UserID
+                if(user.Id > maxID) maxID = user.Id;
             }
-            return maxID;
+            return maxID + 1;
         }
     }
 }

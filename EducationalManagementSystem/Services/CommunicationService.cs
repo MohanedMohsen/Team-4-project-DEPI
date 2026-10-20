@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using EducationalManagementSystem.Interfaces;
+using EducationalManagementSystem.Models;
 
 namespace EducationalManagementSystem.Services
 {
@@ -12,18 +13,26 @@ namespace EducationalManagementSystem.Services
             public int CourseId { get; set; }
             public string Title { get; set; } = string.Empty;
             public string Message { get; set; } = string.Empty;
-            public DateTime CreatedAt { get; set; } = DateTime.Now;
+            public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         }
 
         private class Notification
         {
             public int StudentId { get; set; }
             public string Message { get; set; } = string.Empty;
-            public DateTime SentAt { get; set; } = DateTime.Now;
+            public DateTime SentAt { get; set; } = DateTime.UtcNow;
         }
 
         private readonly List<Announcement> announcements = new();
         private readonly List<Notification> notifications = new();
+        private readonly ICourseRepository _courseRepository;
+        private readonly IUserRepository _userRepository;
+
+        public CommunicationService(ICourseRepository courseRepository, IUserRepository userRepository)
+        {
+            _courseRepository = courseRepository ?? throw new ArgumentNullException(nameof(courseRepository));
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+        }
 
         public bool CreateAnnouncement(
             int doctorId,
@@ -32,6 +41,10 @@ namespace EducationalManagementSystem.Services
             string message)
         {
             if (doctorId <= 0 || courseId <= 0)
+                return false;
+
+            Course? course = _courseRepository.GetCourseById(courseId);
+            if (course is null || course.CreatedByDoctorId != doctorId)
                 return false;
 
             if (string.IsNullOrWhiteSpace(title) ||
@@ -56,6 +69,9 @@ namespace EducationalManagementSystem.Services
         {
             if (studentId <= 0 ||
                 string.IsNullOrWhiteSpace(message))
+                return false;
+
+            if (_userRepository.GetUserByID(studentId) is not Student)
                 return false;
 
             notifications.Add(new Notification

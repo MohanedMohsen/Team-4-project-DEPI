@@ -12,3 +12,27 @@ D:\Depi\New folder (2)\EducationalManagementSystem\obj\Debug\net10.0\refint\Educ
 D:\Depi\New folder (2)\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.pdb
 D:\Depi\New folder (2)\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.genruntimeconfig.cache
 D:\Depi\New folder (2)\EducationalManagementSystem\obj\Debug\net10.0\ref\EducationalManagementSystem.dll
+D:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.GeneratedMSBuildEditorConfig.editorconfig
+D:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.AssemblyInfoInputs.cache
+D:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.AssemblyInfo.cs
+D:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.csproj.CoreCompileInputs.cache
+D:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.sourcelink.json
+D:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.dll
+D:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\refint\EducationalManagementSystem.dll
+D:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.pdb
+E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.GeneratedMSBuildEditorConfig.editorconfig
+E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.AssemblyInfoInputs.cache
+E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.AssemblyInfo.cs
+E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.csproj.CoreCompileInputs.cache
+E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.sourcelink.json
+E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.dll
+E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\refint\EducationalManagementSystem.dll
+E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.pdb
+E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\bin\Debug\net10.0\EducationalManagementSystem.exe
+E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\bin\Debug\net10.0\EducationalManagementSystem.deps.json
+E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\bin\Debug\net10.0\EducationalManagementSystem.runtimeconfig.json
+E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\bin\Debug\net10.0\EducationalManagementSystem.dll
+E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\bin\Debug\net10.0\EducationalManagementSystem.pdb
+E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.genruntimeconfig.cache
+E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\ref\EducationalManagementSystem.dll
+E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\Educatio.8B92E029.Up2Date

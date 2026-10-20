@@ -19,6 +19,8 @@ namespace EducationalManagementSystem.Interfaces
 
         bool RegisterStudent(int studentId, int courseId);
 
+        bool IsStudentRegistered(int studentId, int courseId);
+
         bool AssignTeachingAssistant(int courseId, int assistantId);
 
         List<Course> GetCoursesByDoctor(int doctorId);

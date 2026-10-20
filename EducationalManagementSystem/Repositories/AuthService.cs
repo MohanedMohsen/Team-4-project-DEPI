@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using EducationalManagementSystem.Interfaces;
 using EducationalManagementSystem.Models;
@@ -18,7 +17,9 @@ namespace EducationalManagementSystem.Repositories
         private bool IsValidEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email)) return false;
-            return email.Contains("@") && email.Contains(".") && (email.Contains("gmail") || email.Contains("hotmail")) && email.IndexOf('.') > 0;
+            int atIndex = email.IndexOf('@');
+            int dotIndex = email.LastIndexOf('.');
+            return atIndex > 0 && dotIndex > atIndex + 1 && dotIndex < email.Length - 1;
         }
 
         public bool IsValidPassword(string password)
@@ -36,7 +37,8 @@ namespace EducationalManagementSystem.Repositories
 
         public (string? UserId, string? tempPassword) SignUp(string FullName, string email)
         {
-            if (!IsValidEmail(email))
+            email = email.Trim();
+            if (string.IsNullOrWhiteSpace(FullName) || !IsValidEmail(email))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Error !! | Email's Format is wrong !");
@@ -44,7 +46,13 @@ namespace EducationalManagementSystem.Repositories
                 return (null, null);
             }
 
-            int numericId = _userRepository.GetUserByID();
+            foreach (User user in _userRepository.GetUsersFromDB())
+            {
+                if (string.Equals(user.Email, email, StringComparison.OrdinalIgnoreCase))
+                    return (null, null);
+            }
+
+            int numericId = _userRepository.GetNextID();
             string generatedId = "STU" + numericId;
             string tempPassword = "Temp" + new Random().Next(100, 999);
 
@@ -132,7 +140,7 @@ namespace EducationalManagementSystem.Repositories
         public bool ChangePassword(int userId, string currentPassword, string newPassword)
         {
             var user = _userRepository.GetUserByID(userId);
-            if(user!=null && user.Password == currentPassword)
+            if(user!=null && user.Password == currentPassword && IsValidPassword(newPassword))
             {
                 user.Password = newPassword;
                 user.MustPasswordChange = false;

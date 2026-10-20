@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Depi\\New folder (2)\\EducationalManagementSystem\\EducationalManagementSystem.csproj": {}
+    "E:\\Depi projects\\Team-4-project-DEPI\\EducationalManagementSystem\\EducationalManagementSystem.csproj": {}
   },
   "projects": {
-    "D:\\Depi\\New folder (2)\\EducationalManagementSystem\\EducationalManagementSystem.csproj": {
+    "E:\\Depi projects\\Team-4-project-DEPI\\EducationalManagementSystem\\EducationalManagementSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Depi\\New folder (2)\\EducationalManagementSystem\\EducationalManagementSystem.csproj",
+        "projectUniqueName": "E:\\Depi projects\\Team-4-project-DEPI\\EducationalManagementSystem\\EducationalManagementSystem.csproj",
         "projectName": "EducationalManagementSystem",
-        "projectPath": "D:\\Depi\\New folder (2)\\EducationalManagementSystem\\EducationalManagementSystem.csproj",
-        "packagesPath": "C:\\Users\\SHADY\\.nuget\\packages\\",
-        "outputPath": "D:\\Depi\\New folder (2)\\EducationalManagementSystem\\obj\\",
+        "projectPath": "E:\\Depi projects\\Team-4-project-DEPI\\EducationalManagementSystem\\EducationalManagementSystem.csproj",
+        "packagesPath": "C:\\Users\\mohan\\.nuget\\packages\\",
+        "outputPath": "E:\\Depi projects\\Team-4-project-DEPI\\EducationalManagementSystem\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\SHADY\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mohan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

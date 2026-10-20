@@ -18,5 +18,7 @@ namespace EducationalManagementSystem.Interfaces
             int studentId);
 
         bool UpdateSolution(AssignmentSolution solution);
+
+        bool DeleteSolution(int solutionId);
     }
 }

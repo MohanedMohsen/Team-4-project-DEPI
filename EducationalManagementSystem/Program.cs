@@ -10,18 +10,22 @@ namespace EducationalManagementSystem
     {
         static void Main(string[] args)
         {
-            IAuthService authService = new AuthService();
+            IUserRepository userRepository = new InMemoryUserRepository();
+            ICourseRepository courseRepository = new InMemoryCourseRepository(userRepository);
+            IAssignmentRepository assignmentRepository = new InMemoryAssignmentRepository();
+            IAssignmentSolutionRepository solutionRepository = new InMemoryAssignmentSolutionRepository();
 
-            ICourseService? courseService = null;
-            IAssignmentService? assignmentService = null;
-            IGradingService? gradingService = null;
-            ICommunicationService? communicationService = null;
+            IAuthService authService = new EducationalManagementSystem.Repositories.AuthService(userRepository);
+            ICourseService courseService = new CourseService(courseRepository, assignmentRepository, solutionRepository, userRepository);
+            IAssignmentService assignmentService = new AssignmentService(assignmentRepository, solutionRepository, courseRepository, userRepository, new AssignmentValidator());
+            IGradingService gradingService = new GradingService(solutionRepository, assignmentRepository);
+            ICommunicationService communicationService = new CommunicationService(courseRepository, userRepository);
             MainMenu.Start(
                 authService,
-                courseService!,
-                assignmentService!,
-                gradingService!,
-                communicationService!
+                courseService,
+                assignmentService,
+                gradingService,
+                communicationService
             );
         }
     }
