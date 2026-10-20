@@ -13,6 +13,37 @@ public sealed class InMemoryCourseRepository : ICourseRepository
     public InMemoryCourseRepository(IUserRepository userRepository)
     {
         _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+
+        var ta1 = _userRepository.GetUserByID(201) as TeachingAssistant;
+        var ta2 = _userRepository.GetUserByID(202) as TeachingAssistant;
+
+        var c1 = new Course { Id = 1, Name = "Prog 1", Code = "CS111", CreatedByDoctorId = 106, Description = "Introduction to Programming" };
+        var c2 = new Course { Id = 2, Name = "Prog 2", Code = "CS112", CreatedByDoctorId = 107, Description = "Object Oriented Programming" };
+        var c3 = new Course { Id = 3, Name = "Math 1", Code = "CS123", CreatedByDoctorId = 105, Description = "Calculus & Linear Algebra" };
+        var c4 = new Course { Id = 4, Name = "Math 2", Code = "CS333", CreatedByDoctorId = 103, Description = "Discrete Mathematics" };
+        var c5 = new Course { Id = 5, Name = "Prog 3", Code = "CS136", CreatedByDoctorId = 108, Description = "Data Structures & Algorithms" };
+
+        if (ta1 != null)
+        {
+            c1.TeachingAssistants.Add(ta1);
+            c2.TeachingAssistants.Add(ta1);
+            ta1.AssignedCourses.Add(c1);
+            ta1.AssignedCourses.Add(c2);
+        }
+
+        if (ta2 != null)
+        {
+            c4.TeachingAssistants.Add(ta2);
+            ta2.AssignedCourses.Add(c4);
+        }
+
+        _courses.Add(c1);
+        _courses.Add(c2);
+        _courses.Add(c3);
+        _courses.Add(c4);
+        _courses.Add(c5);
+
+        _nextId = 6;
     }
 
     public void Add(Course course)
