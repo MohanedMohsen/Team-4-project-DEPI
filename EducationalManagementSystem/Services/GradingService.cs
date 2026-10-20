@@ -89,5 +89,21 @@ namespace EducationalManagementSystem.Services
 
             return solutions;
         }
+
+        public List<AssignmentSolution> GetSolutionsByAssignment(int assignmentId)
+        {
+            if (assignmentId <= 0)
+            {
+                return new List<AssignmentSolution>();
+            }
+
+            List<AssignmentSolution> solutions = _solutionRepository.GetSolutionsByAssignment(assignmentId);
+            if (solutions == null)
+            {
+                return new List<AssignmentSolution>();
+            }
+
+            return solutions;
+        }
     }
 }

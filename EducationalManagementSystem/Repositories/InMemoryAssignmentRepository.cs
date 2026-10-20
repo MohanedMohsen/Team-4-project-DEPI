@@ -9,6 +9,59 @@ public sealed class InMemoryAssignmentRepository : IAssignmentRepository
     private readonly ArrayList _assignments = new ArrayList();
     private int _nextId = 1;
 
+    public InMemoryAssignmentRepository()
+    {
+        _assignments.Add(new Assignment
+        {
+            Id = 1,
+            CourseId = 1,
+            DoctorCreatorId = 106,
+            Title = "Assignment 1: Variables & Control Flow",
+            Description = "Implement simple calculator and loop conditions.",
+            MaxGrade = 20,
+            DueDate = DateTime.UtcNow.AddDays(7),
+            CreatedAt = DateTime.UtcNow
+        });
+
+        _assignments.Add(new Assignment
+        {
+            Id = 2,
+            CourseId = 1,
+            DoctorCreatorId = 106,
+            Title = "Assignment 2: Functions & Arrays",
+            Description = "Write functions for sorting and searching arrays.",
+            MaxGrade = 30,
+            DueDate = DateTime.UtcNow.AddDays(14),
+            CreatedAt = DateTime.UtcNow
+        });
+
+        _assignments.Add(new Assignment
+        {
+            Id = 3,
+            CourseId = 2,
+            DoctorCreatorId = 107,
+            Title = "Assignment 1: OOP Classes & Encapsulation",
+            Description = "Create a Student class hierarchy with properties.",
+            MaxGrade = 50,
+            DueDate = DateTime.UtcNow.AddDays(10),
+            CreatedAt = DateTime.UtcNow
+        });
+
+        _assignments.Add(new Assignment
+        {
+            Id = 4,
+            CourseId = 4,
+            DoctorCreatorId = 103,
+            Title = "Assignment 1: Logic & Sets Proofs",
+            Description = "Solve problem set 1 for propositional logic.",
+            MaxGrade = 25,
+            DueDate = DateTime.UtcNow.AddDays(5),
+            CreatedAt = DateTime.UtcNow
+        });
+
+        _nextId = 5;
+    }
+
     public bool AddAssignment(Assignment assignment)
     {
         if (assignment is null)

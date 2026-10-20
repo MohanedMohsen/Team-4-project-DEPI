@@ -1,4 +1,4 @@
-﻿using EducationalManagementSystem.Interfaces;
+using EducationalManagementSystem.Interfaces;
 using EducationalManagementSystem.Models;
 using EducationalManagementSystem.Models.Enums;
 
@@ -72,6 +72,10 @@ public static class MainMenu
             else if (user is Student)
             {
                 StudentMenu.Show((Student)user, courseService, assignmentService);
+            }
+            else if (user is TeachingAssistant ta)
+            {
+                TeachingAssistantMenu.Show(ta, courseService, assignmentService, gradingService, communicationService);
             }
             else
             {
