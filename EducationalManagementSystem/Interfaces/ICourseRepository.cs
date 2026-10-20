@@ -7,6 +7,12 @@ namespace EducationalManagementSystem.Interfaces
 {
     public interface ICourseRepository
     {
+
+        void Add(Course course);
+        Course? GetById(int id);
+        IEnumerable<Course> GetAll();
+        void Update(Course course);
+        void Delete(int id);
         bool AddCourse(Course course);
 
         Course? GetCourseById(int courseId);

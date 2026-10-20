@@ -1,4 +1,4 @@
-﻿using EducationalManagementSystem.Models;
+using EducationalManagementSystem.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,5 +14,7 @@ namespace EducationalManagementSystem.Interfaces
         bool SetComment(int solutionId, string comment);
 
         List<AssignmentSolution> ViewGradesReport(int studentId);
+
+        List<AssignmentSolution> GetSolutionsByAssignment(int assignmentId);
     }
 }
