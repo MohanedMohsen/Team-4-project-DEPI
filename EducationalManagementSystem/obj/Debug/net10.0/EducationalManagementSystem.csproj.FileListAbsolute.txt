@@ -1,0 +1,14 @@
+D:\Depi\New folder (2)\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.GeneratedMSBuildEditorConfig.editorconfig
+D:\Depi\New folder (2)\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.AssemblyInfoInputs.cache
+D:\Depi\New folder (2)\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.AssemblyInfo.cs
+D:\Depi\New folder (2)\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.csproj.CoreCompileInputs.cache
+D:\Depi\New folder (2)\EducationalManagementSystem\bin\Debug\net10.0\EducationalManagementSystem.exe
+D:\Depi\New folder (2)\EducationalManagementSystem\bin\Debug\net10.0\EducationalManagementSystem.deps.json
+D:\Depi\New folder (2)\EducationalManagementSystem\bin\Debug\net10.0\EducationalManagementSystem.runtimeconfig.json
+D:\Depi\New folder (2)\EducationalManagementSystem\bin\Debug\net10.0\EducationalManagementSystem.dll
+D:\Depi\New folder (2)\EducationalManagementSystem\bin\Debug\net10.0\EducationalManagementSystem.pdb
+D:\Depi\New folder (2)\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.dll
+D:\Depi\New folder (2)\EducationalManagementSystem\obj\Debug\net10.0\refint\EducationalManagementSystem.dll
+D:\Depi\New folder (2)\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.pdb
+D:\Depi\New folder (2)\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.genruntimeconfig.cache
+D:\Depi\New folder (2)\EducationalManagementSystem\obj\Debug\net10.0\ref\EducationalManagementSystem.dll

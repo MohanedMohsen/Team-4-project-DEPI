@@ -10,7 +10,7 @@ namespace EducationalManagementSystem.Interfaces
         // SignUp by full name and email
         (string? UserId, string? tempPassword) SignUp(string FullName, string email);
 
-        User? Login(string username, string password);
+        User? Login(string userID, string password);
 
         bool ChangePassword(int userId, string currentPassword, string newPassword);
 

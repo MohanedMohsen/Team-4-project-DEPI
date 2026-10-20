@@ -32,5 +32,6 @@ namespace EducationalManagementSystem.Models
         public DateTime? RegistrationStartDate { get; set; }
 
         public DateTime? RegistrationEndDate { get; set; }
+        
     }
 }
