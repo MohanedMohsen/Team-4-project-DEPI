@@ -106,30 +106,56 @@ The exact .NET SDK version and development environment will be documented after 
 The planned solution structure is:
 
 ```text
-EducationalManagementSystem/
-├── EducationalManagementSystem.sln
+Mini_Project_Educational/
 ├── README.md
-├── .gitignore
-├── .editorconfig
-│
-├── docs/
-│   ├── diagrams/
-│   ├── database/
-│   └── decisions/
-│
-├── database/
-│   ├── scripts/
-│   └── README.md
-│
-├── src/
-│   ├── EMS.Domain/
-│   ├── EMS.Application/
-│   ├── EMS.Infrastructure/
-│   └── EMS.Presentation.Console/
-│
-└── tests/
-    ├── EMS.Domain.Tests/
-    └── EMS.Application.Tests/
+├── EducationalManagementSystem.slnx
+└── EducationalManagementSystem/
+    ├── Program.cs                         # Application Entry Point
+    ├── EducationalManagementSystem.csproj
+    │
+    ├── Models/                            # Data Models Layer
+    │   ├── User.cs                        # Base User Class
+    │   ├── Doctor.cs                      # Doctor Class (Inherits from User)
+    │   ├── Student.cs                     # Student Class (Inherits from User)
+    │   ├── TeachingAssistant.cs           # TA Class (Inherits from User)
+    │   ├── Course.cs                      # Course Entity
+    │   ├── Assignment.cs                  # Assignment Entity
+    │   ├── AssignmentSolution.cs          # Assignment Solution Entity
+    │   └── Enums/
+    │       └── UserRole.cs                # Roles Enum (Doctor, Student, TA)
+    │
+    ├── Interfaces/                        # Abstraction Layer
+    │   ├── IUserRepository.cs
+    │   ├── ICourseRepository.cs
+    │   ├── IAssignmentRepository.cs
+    │   ├── IAssignmentSolutionRepository.cs
+    │   ├── IAuthService.cs
+    │   ├── ICourseService.cs
+    │   ├── IAssignmentService.cs
+    │   ├── IAssignmentValidator.cs
+    │   ├── IGradingService.cs
+    │   └── ICommunicationService.cs
+    │
+    ├── Repositories/                      # In-Memory Data Access Layer
+    │   ├── InMemoryUserRepository.cs
+    │   ├── InMemoryCourseRepository.cs
+    │   ├── InMemoryAssignmentRepository.cs
+    │   └── InMemoryAssignmentSolutionRepository.cs
+    │
+    ├── Services/                          # Business Logic & Validations Layer
+    │   ├── AuthService.cs                 # User Auth & Registration Logic
+    │   ├── CourseService.cs              # Course Management & Student Enrollment
+    │   ├── AssignmentService.cs          # Assignment Creation & Solution Submission
+    │   ├── AssignmentValidator.cs        # Assignment Rules & Validations
+    │   ├── GradingService.cs             # Grading & Feedback Services
+    │   └── CommunicationService.cs       # Announcements & Notifications Logic
+    │
+    └── UI/                                # Presentation / Console UI Layer
+        ├── ConsoleHelper.cs               # Console Formatting Helpers
+        ├── MainMenu.cs                    # Authentication & Entry Menu
+        ├── DoctorMenu.cs                  # Doctor Dashboard
+        ├── StudentMenu.cs                 # Student Dashboard
+        └── TeachingAssistantMenu.cs       # Teaching Assistant Dashboard
 ```
 
 This structure is the planned organization. The actual repository will be updated to reflect the projects and files that have been created.
