@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using EducationalManagementSystem.Interfaces;
@@ -10,11 +10,11 @@ namespace EducationalManagementSystem.Repositories
     {
         private static readonly List<User> _users = new()
         {
-            new Student { Id = 1, UserID = "STU00102345", Username = "s001", Password = "5001", FullName = "Hussien Samy", Email = "hussien.samy@ems.com", IsActive = true, MustPasswordChange = false },
-            new Student { Id = 2, UserID = "STU00204690", Username = "s002", Password = "5002", FullName = "Ashraf Sayed", Email = "ashraf.sayed@ems.com", IsActive = true, MustPasswordChange = false },
-            new Student { Id = 3, UserID = "STU00307035", Username = "s003", Password = "5003", FullName = "Mostafa Hussien", Email = "mostafa.hussien@ems.com", IsActive = true, MustPasswordChange = false },
-            new Student { Id = 4, UserID = "STU00409380", Username = "s004", Password = "5004", FullName = "Ali Mohamed", Email = "ali.mohamed@ems.com", IsActive = true, MustPasswordChange = false },
-            new Student { Id = 5, UserID = "STU00501725", Username = "s005", Password = "5005", FullName = "Hani Sayed", Email = "hani.sayed@ems.com", IsActive = true, MustPasswordChange = false },
+            new Student { Id = 1, UserID = "STU1001", Username = "s001", Password = "1001", FullName = "Hussien Samy", Email = "hussien.samy@ems.com", IsActive = true, MustPasswordChange = false },
+            new Student { Id = 2, UserID = "STU1002", Username = "s002", Password = "1002", FullName = "Ashraf Sayed", Email = "ashraf.sayed@ems.com", IsActive = true, MustPasswordChange = false },
+            new Student { Id = 3, UserID = "STU1003", Username = "s003", Password = "1003", FullName = "Mostafa Hussien", Email = "mostafa.hussien@ems.com", IsActive = true, MustPasswordChange = false },
+            new Student { Id = 4, UserID = "STU1004", Username = "s004", Password = "1004", FullName = "Ali Mohamed", Email = "ali.mohamed@ems.com", IsActive = true, MustPasswordChange = false },
+            new Student { Id = 5, UserID = "STU1005", Username = "s005", Password = "1005", FullName = "Hani Sayed", Email = "hani.sayed@ems.com", IsActive = true, MustPasswordChange = false },
 
             new Doctor { Id = 101, UserID = "DOC101", Username = "dr_ali", Password = "doc123", FullName = "Ali", Email = "ali.doctor@ems.com", IsActive = true, MustPasswordChange = false },
             new Doctor { Id = 102, UserID = "DOC102", Username = "dr_mostafa", Password = "doc123", FullName = "Mostafa", Email = "mostafa.doctor@ems.com", IsActive = true, MustPasswordChange = false },

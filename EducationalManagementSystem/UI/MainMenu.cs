@@ -67,11 +67,11 @@ public static class MainMenu
             Console.ReadKey();
             if (user is Doctor)
             {
-                DoctorMenu.Show((Doctor)user, courseService, assignmentService);
+                DoctorMenu.Show((Doctor)user, courseService, assignmentService , gradingService);
             }
             else if (user is Student)
             {
-                StudentMenu.Show((Student)user, courseService, assignmentService);
+                StudentMenu.Show((Student)user, courseService, assignmentService , gradingService);
             }
             else if (user is TeachingAssistant ta)
             {

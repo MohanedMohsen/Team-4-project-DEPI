@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Depi projects\\Team-4-project-DEPI\\EducationalManagementSystem\\EducationalManagementSystem.csproj": {}
+    "C:\\Users\\SHADY\\source\\repos\\Team-4-project-DEPI\\EducationalManagementSystem\\EducationalManagementSystem.csproj": {}
   },
   "projects": {
-    "E:\\Depi projects\\Team-4-project-DEPI\\EducationalManagementSystem\\EducationalManagementSystem.csproj": {
+    "C:\\Users\\SHADY\\source\\repos\\Team-4-project-DEPI\\EducationalManagementSystem\\EducationalManagementSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Depi projects\\Team-4-project-DEPI\\EducationalManagementSystem\\EducationalManagementSystem.csproj",
+        "projectUniqueName": "C:\\Users\\SHADY\\source\\repos\\Team-4-project-DEPI\\EducationalManagementSystem\\EducationalManagementSystem.csproj",
         "projectName": "EducationalManagementSystem",
-        "projectPath": "E:\\Depi projects\\Team-4-project-DEPI\\EducationalManagementSystem\\EducationalManagementSystem.csproj",
-        "packagesPath": "C:\\Users\\mohan\\.nuget\\packages\\",
-        "outputPath": "E:\\Depi projects\\Team-4-project-DEPI\\EducationalManagementSystem\\obj\\",
+        "projectPath": "C:\\Users\\SHADY\\source\\repos\\Team-4-project-DEPI\\EducationalManagementSystem\\EducationalManagementSystem.csproj",
+        "packagesPath": "C:\\Users\\SHADY\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\SHADY\\source\\repos\\Team-4-project-DEPI\\EducationalManagementSystem\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\mohan\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\SHADY\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
