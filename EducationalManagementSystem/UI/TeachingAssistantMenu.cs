@@ -64,10 +64,10 @@ namespace EducationalManagementSystem.UI
                         CreateAssignmentWindow(assistant, courseService, assignmentService);
                         break;
                     case "6":
-                        ViewSolutionsWindow(assistant, gradingService);
+                        ViewSolutionsWindow(assistant, courseService, assignmentService, gradingService);
                         break;
                     case "7":
-                        GradeSolutionWindow(assistant, gradingService);
+                        GradeSolutionWindow(assistant, courseService, assignmentService, gradingService);
                         break;
                     case "8":
                         ViewGradesReportWindow(assistant, gradingService);
@@ -102,7 +102,7 @@ namespace EducationalManagementSystem.UI
             {
                 foreach (var course in myCourses)
                 {
-                    Console.WriteLine($"ID : {course.Id} | Code : {course.Code} | Name : {course.Name} | Doctor ID : {course.CreatedByDoctorId}");
+                    Console.WriteLine($"Code : {course.Code} | Name : {course.Name} | Doctor ID : {course.CreatedByDoctorId}");
                 }
             }
             else
@@ -125,7 +125,7 @@ namespace EducationalManagementSystem.UI
             {
                 foreach (var course in courses)
                 {
-                    Console.WriteLine($"ID: {course.Id} | Code : {course.Code} | Name : {course.Name} | Doctor ID : {course.CreatedByDoctorId}");
+                    Console.WriteLine($"Code : {course.Code} | Name : {course.Name} | Doctor ID : {course.CreatedByDoctorId}");
                     count++;
                 }
             }
@@ -141,12 +141,41 @@ namespace EducationalManagementSystem.UI
         {
             Console.Clear();
             WelcomeWindow(assistant);
-            Console.WriteLine("-- Join Course as Teaching Assistant --");
-            Console.Write("Enter Course ID to Join : ");
-            if (int.TryParse(Console.ReadLine(), out int courseId))
+            Console.WriteLine("-- Join Course as Teaching Assistant --\n");
+
+            var courses = courseService.GetAllCourses();
+            if (courses == null || courses.Count == 0)
             {
-                Console.WriteLine();
-                bool success = courseService.AssignTeachingAssistant(courseId, assistant.Id);
+                Console.WriteLine("No courses available at the moment ..");
+                Console.WriteLine("\nPress Any Key To Return ....");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine("Available Courses:");
+            foreach (var course in courses)
+            {
+                Console.WriteLine($"Code: {course.Code} | Name: {course.Name} | Doctor ID: {course.CreatedByDoctorId}");
+            }
+            Console.WriteLine("-----------------------------------------");
+
+            Console.Write("Enter Course Code to Join (e.g., CS111): ");
+            string courseCode = (Console.ReadLine() ?? string.Empty).Trim().ToUpperInvariant();
+
+            Course? targetCourse = null;
+            foreach (var course in courses)
+            {
+                if (course.Code.Trim().ToUpperInvariant() == courseCode)
+                {
+                    targetCourse = course;
+                    break;
+                }
+            }
+
+            Console.WriteLine();
+            if (targetCourse != null)
+            {
+                bool success = courseService.AssignTeachingAssistant(targetCourse.Id, assistant.Id);
                 if (success)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
@@ -156,17 +185,17 @@ namespace EducationalManagementSystem.UI
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Failed to join course. Course not found or you are already assigned.");
+                    Console.WriteLine("Failed to join course. You might already be assigned.");
                     Console.ResetColor();
                 }
             }
             else
             {
-                Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Invalid Course ID format.");
+                Console.WriteLine("Invalid Course Code or course not found.");
                 Console.ResetColor();
             }
+
             Console.WriteLine("\nPress Any Key To Return ....");
             Console.ReadKey();
         }
@@ -175,46 +204,79 @@ namespace EducationalManagementSystem.UI
         {
             Console.Clear();
             WelcomeWindow(assistant);
-            Console.WriteLine("-- View Course Assignments --");
-            Console.Write("Enter Course ID: ");
-            if (!int.TryParse(Console.ReadLine(), out int courseId))
+            Console.WriteLine("-- View Course Assignments --\n");
+
+            var courses = courseService.GetAllCourses();
+            if (courses == null || courses.Count == 0)
             {
-                Console.WriteLine();
+                Console.WriteLine("No courses available ..");
+                Console.WriteLine("\nPress Any Key To Return ....");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine("Available Courses:");
+            foreach (var course in courses)
+            {
+                Console.WriteLine($"Code: {course.Code} | Name: {course.Name}");
+            }
+            Console.WriteLine("-----------------------------------------");
+
+            Console.Write("Enter Course Code (e.g., CS111): ");
+            string courseCode = (Console.ReadLine() ?? string.Empty).Trim().ToUpperInvariant();
+
+            Course? targetCourse = null;
+            foreach (var course in courses)
+            {
+                if (course.Code.Trim().ToUpperInvariant() == courseCode)
+                {
+                    targetCourse = course;
+                    break;
+                }
+            }
+
+            Console.WriteLine();
+            if (targetCourse == null)
+            {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Invalid Course ID format.");
+                Console.WriteLine("Invalid Course Code.");
                 Console.ResetColor();
             }
             else
             {
-                var course = courseService.GetCourseById(courseId);
-                if (course == null)
+                Console.WriteLine($"Assignments for [{targetCourse.Code} - {targetCourse.Name}]:");
+                List<Assignment> assignments = assignmentService.ViewAssignments(targetCourse.Id);
+                if (assignments == null || assignments.Count == 0)
                 {
-                    Console.WriteLine();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Course not found.");
-                    Console.ResetColor();
+                    Console.WriteLine("No assignments available for this course.");
                 }
                 else
                 {
-                    Console.WriteLine($"\nAssignments for [{course.Code} - {course.Name}]:");
-                    List<Assignment> assignments = assignmentService.ViewAssignments(courseId);
-                    if (assignments == null || assignments.Count == 0)
+                    int index = 1;
+                    foreach (Assignment assignment in assignments)
                     {
-                        Console.WriteLine("No assignments available for this course.");
-                    }
-                    else
-                    {
-                        foreach (Assignment assignment in assignments)
+                        Console.WriteLine($"{index}. Title: {assignment.Title} | Max Grade: {assignment.MaxGrade} | Due Date: {(assignment.DueDate.HasValue ? assignment.DueDate.Value.ToString("yyyy-MM-dd") : "No Due Date")}");
+                        if (!string.IsNullOrWhiteSpace(assignment.Description))
                         {
-                            Console.WriteLine($"ID: {assignment.Id} | Title: {assignment.Title} | Max Grade: {assignment.MaxGrade} | Due Date: {(assignment.DueDate.HasValue ? assignment.DueDate.Value.ToString("yyyy-MM-dd") : "No Due Date")}");
-                            if (!string.IsNullOrWhiteSpace(assignment.Description))
-                            {
-                                Console.WriteLine($"   Description: {assignment.Description}");
-                            }
+                            Console.WriteLine($"   Description: {assignment.Description}");
                         }
+                        index++;
+                    }
+
+                    Console.WriteLine("-----------------------------------------");
+                    Console.Write("\nEnter Assignment Number to view details (0 to cancel): ");
+                    if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= assignments.Count)
+                    {
+                        Assignment selectedAssignment = assignments[choice - 1];
+                        Console.WriteLine($"\n--- Selected Assignment: {selectedAssignment.Title} ---");
+                        Console.WriteLine($"Title: {selectedAssignment.Title}");
+                        Console.WriteLine($"Max Grade: {selectedAssignment.MaxGrade}");
+                        Console.WriteLine($"Due Date: {(selectedAssignment.DueDate.HasValue ? selectedAssignment.DueDate.Value.ToString("yyyy-MM-dd") : "None")}");
+                        Console.WriteLine($"Description: {(string.IsNullOrWhiteSpace(selectedAssignment.Description) ? "None" : selectedAssignment.Description)}");
                     }
                 }
             }
+
             Console.WriteLine("\nPress Any Key To Return ....");
             Console.ReadKey();
         }
@@ -223,35 +285,53 @@ namespace EducationalManagementSystem.UI
         {
             Console.Clear();
             WelcomeWindow(assistant);
-            Console.WriteLine("-- Create Assignment --");
-            Console.Write("Enter Course ID: ");
-            if (!int.TryParse(Console.ReadLine(), out int courseId))
+            Console.WriteLine("-- Create Assignment --\n");
+
+            var courses = courseService.GetAllCourses();
+            if (courses == null || courses.Count == 0)
             {
+                Console.WriteLine("No courses available ..");
+                Console.WriteLine("\nPress Any Key To Return .....");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine("Available Courses:");
+            foreach (var course in courses)
+            {
+                Console.WriteLine($"Code: {course.Code} | Name: {course.Name}");
+            }
+            Console.WriteLine("-----------------------------------------");
+
+            Console.Write("Enter Course Code (e.g., CS111): ");
+            string courseCode = (Console.ReadLine() ?? string.Empty).Trim().ToUpperInvariant();
+
+            Course? targetCourse = null;
+            foreach (var course in courses)
+            {
+                if (course.Code.Trim().ToUpperInvariant() == courseCode)
+                {
+                    targetCourse = course;
+                    break;
+                }
+            }
+
+            if (targetCourse == null)
+            {
+                Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Invalid Course ID format.");
+                Console.WriteLine("Invalid Course Code.");
                 Console.ResetColor();
                 Console.WriteLine("\nPress Any Key To Return .....");
                 Console.ReadKey();
                 return;
             }
 
-            var course = courseService.GetCourseById(courseId);
-            if (course == null)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Course not found.");
-                Console.ResetColor();
-                Console.WriteLine("\nPress Any Key To Return .....");
-                Console.ReadKey();
-                return;
-            }
-
-            // Assign assistant to course if not assigned yet
-            bool isAssigned = assistant.AssignedCourses.Any(c => c.Id == courseId) ||
-                              course.TeachingAssistants.Cast<object>().Any(ta => ta is TeachingAssistant a && a.Id == assistant.Id);
+            bool isAssigned = assistant.AssignedCourses.Any(c => c.Id == targetCourse.Id) ||
+                              targetCourse.TeachingAssistants.Cast<object>().Any(ta => ta is TeachingAssistant a && a.Id == assistant.Id);
             if (!isAssigned)
             {
-                courseService.AssignTeachingAssistant(courseId, assistant.Id);
+                courseService.AssignTeachingAssistant(targetCourse.Id, assistant.Id);
             }
 
             Console.Write("Enter Assignment Title: ");
@@ -262,6 +342,7 @@ namespace EducationalManagementSystem.UI
             bool validGrade = decimal.TryParse(Console.ReadLine(), out decimal maxGrade);
             Console.Write("Enter Due Date (yyyy-MM-dd, Optional): ");
             string dueDateText = Console.ReadLine() ?? string.Empty;
+
             DateTime? dueDate = null;
             bool validDate = true;
             if (!string.IsNullOrWhiteSpace(dueDateText))
@@ -276,18 +357,19 @@ namespace EducationalManagementSystem.UI
                 }
             }
 
+            Console.WriteLine();
             if (!validGrade || maxGrade <= 0 || !validDate || string.IsNullOrWhiteSpace(title))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Failed to create assignment. Please check the entered data (Title cannot be empty, Max Grade must be > 0, valid Date).");
+                Console.WriteLine("Failed to create assignment. Please check the entered data.");
                 Console.ResetColor();
             }
             else
             {
                 bool success = assignmentService.CreateAssignment(new Assignment
                 {
-                    CourseId = courseId,
-                    DoctorCreatorId = course.CreatedByDoctorId,
+                    CourseId = targetCourse.Id,
+                    DoctorCreatorId = targetCourse.CreatedByDoctorId,
                     Title = title,
                     Description = description,
                     MaxGrade = maxGrade,
@@ -303,7 +385,7 @@ namespace EducationalManagementSystem.UI
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Failed to create assignment. Please check assignment details.");
+                    Console.WriteLine("Failed to create assignment.");
                     Console.ResetColor();
                 }
             }
@@ -312,11 +394,11 @@ namespace EducationalManagementSystem.UI
             Console.ReadKey();
         }
 
-        public static void ViewSolutionsWindow(TeachingAssistant assistant, IGradingService? gradingService)
+        public static void ViewSolutionsWindow(TeachingAssistant assistant, ICourseService courseService, IAssignmentService assignmentService, IGradingService? gradingService)
         {
             Console.Clear();
             WelcomeWindow(assistant);
-            Console.WriteLine("-- View Assignment Solutions --");
+            Console.WriteLine("-- View Assignment Solutions --\n");
             if (gradingService == null)
             {
                 Console.WriteLine("Grading service is not available.");
@@ -325,44 +407,114 @@ namespace EducationalManagementSystem.UI
                 return;
             }
 
-            Console.Write("Enter Assignment ID: ");
-            if (!int.TryParse(Console.ReadLine(), out int assignmentId))
+            var allCourses = courseService.GetAllCourses();
+            var myCourses = allCourses?
+                .Where(c => c.TeachingAssistants.Cast<object>().Any(ta => ta is TeachingAssistant a && a.Id == assistant.Id) ||
+                            assistant.AssignedCourses.Any(ac => ac.Id == c.Id))
+                .DistinctBy(c => c.Id)
+                .ToList() ?? new List<Course>();
+
+            if (myCourses.Count == 0)
             {
+                Console.WriteLine("You are not assigned to any courses yet.");
+                Console.WriteLine("\nPress Any Key To Return ....");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine("Your Assigned Courses:");
+            foreach (var c in myCourses)
+            {
+                Console.WriteLine($"Code: {c.Code} | Name: {c.Name}");
+            }
+            Console.WriteLine("-----------------------------------------");
+
+            Console.Write("Enter Course Code (e.g., CS111): ");
+            string courseCode = (Console.ReadLine() ?? string.Empty).Trim().ToUpperInvariant();
+
+            Course? targetCourse = null;
+            foreach (var c in myCourses)
+            {
+                if (c.Code.Trim().ToUpperInvariant() == courseCode)
+                {
+                    targetCourse = c;
+                    break;
+                }
+            }
+
+            if (targetCourse == null)
+            {
+                Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Invalid Assignment ID format.");
+                Console.WriteLine("Invalid Course Code or you are not assigned to this course.");
                 Console.ResetColor();
+                Console.WriteLine("\nPress Any Key To Return ....");
+                Console.ReadKey();
+                return;
+            }
+
+            var assignments = assignmentService.ViewAssignments(targetCourse.Id);
+            if (assignments == null || assignments.Count == 0)
+            {
+                Console.WriteLine();
+                Console.WriteLine("No assignments found for this course.");
+                Console.WriteLine("\nPress Any Key To Return ....");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine($"\nAssignments for [{targetCourse.Code}]:");
+            int aIndex = 1;
+            foreach (var assignment in assignments)
+            {
+                Console.WriteLine($"{aIndex}. Title: {assignment.Title} | Max Grade: {assignment.MaxGrade}");
+                aIndex++;
+            }
+            Console.WriteLine("-----------------------------------------");
+
+            Console.Write("Enter Assignment Number: ");
+            if (!int.TryParse(Console.ReadLine(), out int aChoice) || aChoice < 1 || aChoice > assignments.Count)
+            {
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Invalid selection.");
+                Console.ResetColor();
+                Console.WriteLine("\nPress Any Key To Return ....");
+                Console.ReadKey();
+                return;
+            }
+
+            Assignment selectedAssignment = assignments[aChoice - 1];
+            var solutions = gradingService.GetSolutionsByAssignment(selectedAssignment.Id);
+
+            if (solutions == null || solutions.Count == 0)
+            {
+                Console.WriteLine("\nNo solutions submitted for this assignment yet.");
             }
             else
             {
-                var solutions = gradingService.GetSolutionsByAssignment(assignmentId);
-                if (solutions == null || solutions.Count == 0)
+                Console.WriteLine($"\nFound {solutions.Count} submission(s):");
+                Console.WriteLine("--------------------------------------------------");
+                int sIndex = 1;
+                foreach (var sol in solutions)
                 {
-                    Console.WriteLine("\nNo solutions submitted for this assignment yet.");
-                }
-                else
-                {
-                    Console.WriteLine($"\nFound {solutions.Count} submission(s):");
+                    string studentName = sol.Student != null ? sol.Student.FullName : $"ID {sol.StudentId}";
+                    Console.WriteLine($"{sIndex}. Student: {studentName} | Submitted: {sol.SubmittedAt:yyyy-MM-dd HH:mm}");
+                    Console.WriteLine($"   Status: {(sol.IsGraded ? $"Graded: {sol.Grade}" : "Not Graded")}");
+                    Console.WriteLine($"   Content: {sol.Content}");
+                    if (!string.IsNullOrWhiteSpace(sol.Comment))
+                    {
+                        Console.WriteLine($"   Feedback: {sol.Comment}");
+                    }
                     Console.WriteLine("--------------------------------------------------");
-                    foreach (var sol in solutions)
-                    {
-                        string studentName = sol.Student != null ? sol.Student.FullName : $"ID {sol.StudentId}";
-                        Console.WriteLine($"Solution ID: {sol.Id} | Student: {studentName} (ID: {sol.StudentId})");
-                        Console.WriteLine($"Submitted At: {sol.SubmittedAt:yyyy-MM-dd HH:mm}");
-                        Console.WriteLine($"Status: {(sol.IsGraded ? $"Graded: {sol.Grade}" : "Not Graded")}");
-                        Console.WriteLine($"Solution Content: {sol.Content}");
-                        if (!string.IsNullOrWhiteSpace(sol.Comment))
-                        {
-                            Console.WriteLine($"Feedback / Comment: {sol.Comment}");
-                        }
-                        Console.WriteLine("--------------------------------------------------");
-                    }
+                    sIndex++;
+                }
 
-                    Console.Write("\nWould you like to grade a solution now? (y/n): ");
-                    string choice = Console.ReadLine() ?? string.Empty;
-                    if (choice.Equals("y", StringComparison.OrdinalIgnoreCase))
-                    {
-                        GradeSolutionPrompt(gradingService);
-                    }
+                Console.Write("\nWould you like to grade a solution now? (y/n): ");
+                string choice = Console.ReadLine() ?? string.Empty;
+                if (choice.Equals("y", StringComparison.OrdinalIgnoreCase))
+                {
+                    GradeSolutionPromptByList(solutions, selectedAssignment.MaxGrade, gradingService);
                 }
             }
 
@@ -370,11 +522,11 @@ namespace EducationalManagementSystem.UI
             Console.ReadKey();
         }
 
-        public static void GradeSolutionWindow(TeachingAssistant assistant, IGradingService? gradingService)
+        public static void GradeSolutionWindow(TeachingAssistant assistant, ICourseService courseService, IAssignmentService assignmentService, IGradingService? gradingService)
         {
             Console.Clear();
             WelcomeWindow(assistant);
-            Console.WriteLine("-- Grade Solution & Feedback --");
+            Console.WriteLine("-- Grade Solution & Feedback --\n");
             if (gradingService == null)
             {
                 Console.WriteLine("Grading service is not available.");
@@ -383,55 +535,36 @@ namespace EducationalManagementSystem.UI
                 return;
             }
 
-            GradeSolutionPrompt(gradingService);
-
-            Console.WriteLine("\nPress Any Key To Return ....");
-            Console.ReadKey();
+            ViewSolutionsWindow(assistant, courseService, assignmentService, gradingService);
         }
 
-        private static void GradeSolutionPrompt(IGradingService gradingService)
+        private static void GradeSolutionPromptByList(List<AssignmentSolution> solutions, decimal maxGrade, IGradingService gradingService)
         {
-            Console.Write("Enter Solution ID: ");
-            if (!int.TryParse(Console.ReadLine(), out int solutionId))
+            Console.Write("\nEnter Submission Number from the list to grade: ");
+            if (!int.TryParse(Console.ReadLine(), out int sChoice) || sChoice < 1 || sChoice > solutions.Count)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Invalid Solution ID format.");
+                Console.WriteLine("Invalid selection.");
                 Console.ResetColor();
                 return;
             }
 
-            var solution = gradingService.ViewSolution(solutionId);
-            if (solution == null)
+            AssignmentSolution selectedSolution = solutions[sChoice - 1];
+
+            Console.Write($"Enter Grade (Max {maxGrade}): ");
+            if (!decimal.TryParse(Console.ReadLine(), out decimal grade) || grade < 0 || grade > maxGrade)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Solution not found.");
+                Console.WriteLine("Invalid grade or exceeds max grade.");
                 Console.ResetColor();
                 return;
             }
 
-            Console.WriteLine("\n--- Solution Details ---");
-            Console.WriteLine($"Solution ID: {solution.Id}");
-            Console.WriteLine($"Student ID: {solution.StudentId}");
-            Console.WriteLine($"Assignment ID: {solution.AssignmentId}");
-            Console.WriteLine($"Submitted Content:\n{solution.Content}");
-            Console.WriteLine($"Current Grade: {(solution.IsGraded ? solution.Grade.ToString() : "Not Graded")}");
-            Console.WriteLine($"Current Comment: {(string.IsNullOrWhiteSpace(solution.Comment) ? "None" : solution.Comment)}");
-            Console.WriteLine("------------------------");
-
-            Console.Write("Enter Grade: ");
-            if (!decimal.TryParse(Console.ReadLine(), out decimal grade) || grade < 0)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Invalid grade. Grade must be a non-negative number.");
-                Console.ResetColor();
-                return;
-            }
-
-            bool gradeSuccess = gradingService.SetGrade(solutionId, grade);
+            bool gradeSuccess = gradingService.SetGrade(selectedSolution.Id, grade);
             if (!gradeSuccess)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Failed to set grade. Please ensure the grade does not exceed the assignment's max grade.");
+                Console.WriteLine("Failed to set grade.");
                 Console.ResetColor();
                 return;
             }
@@ -440,7 +573,7 @@ namespace EducationalManagementSystem.UI
             string comment = Console.ReadLine() ?? string.Empty;
             if (!string.IsNullOrWhiteSpace(comment))
             {
-                gradingService.SetComment(solutionId, comment);
+                gradingService.SetComment(selectedSolution.Id, comment);
             }
 
             Console.ForegroundColor = ConsoleColor.Green;
@@ -452,7 +585,7 @@ namespace EducationalManagementSystem.UI
         {
             Console.Clear();
             WelcomeWindow(assistant);
-            Console.WriteLine("-- Student Grades Report --");
+            Console.WriteLine("-- Student Grades Report --\n");
             if (gradingService == null)
             {
                 Console.WriteLine("Grading service is not available.");
@@ -480,8 +613,7 @@ namespace EducationalManagementSystem.UI
                     Console.WriteLine($"\n--- Grades Report for Student ID: {studentId} ---");
                     foreach (var report in reports)
                     {
-                        Console.WriteLine($"Solution ID: {report.Id} | Assignment ID: {report.AssignmentId}");
-                        Console.WriteLine($"Grade: {(report.IsGraded ? report.Grade.ToString() : "Not Graded")}");
+                        Console.WriteLine($"Assignment ID: {report.AssignmentId} | Grade: {(report.IsGraded ? report.Grade.ToString() : "Not Graded")}");
                         if (!string.IsNullOrWhiteSpace(report.Comment))
                         {
                             Console.WriteLine($"Feedback: {report.Comment}");
@@ -499,7 +631,7 @@ namespace EducationalManagementSystem.UI
         {
             Console.Clear();
             WelcomeWindow(assistant);
-            Console.WriteLine("-- Course Announcements --");
+            Console.WriteLine("-- Course Announcements --\n");
             if (communicationService == null)
             {
                 Console.WriteLine("Communication service is not available.");

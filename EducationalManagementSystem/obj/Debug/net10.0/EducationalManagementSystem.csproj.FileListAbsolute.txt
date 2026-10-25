@@ -36,3 +36,19 @@ E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\bin\Debug\net10
 E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.genruntimeconfig.cache
 E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\ref\EducationalManagementSystem.dll
 E:\Depi projects\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\Educatio.8B92E029.Up2Date
+C:\Users\SHADY\source\repos\Team-4-project-DEPI\EducationalManagementSystem\bin\Debug\net10.0\EducationalManagementSystem.exe
+C:\Users\SHADY\source\repos\Team-4-project-DEPI\EducationalManagementSystem\bin\Debug\net10.0\EducationalManagementSystem.deps.json
+C:\Users\SHADY\source\repos\Team-4-project-DEPI\EducationalManagementSystem\bin\Debug\net10.0\EducationalManagementSystem.runtimeconfig.json
+C:\Users\SHADY\source\repos\Team-4-project-DEPI\EducationalManagementSystem\bin\Debug\net10.0\EducationalManagementSystem.dll
+C:\Users\SHADY\source\repos\Team-4-project-DEPI\EducationalManagementSystem\bin\Debug\net10.0\EducationalManagementSystem.pdb
+C:\Users\SHADY\source\repos\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\SHADY\source\repos\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.AssemblyInfoInputs.cache
+C:\Users\SHADY\source\repos\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.AssemblyInfo.cs
+C:\Users\SHADY\source\repos\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.csproj.CoreCompileInputs.cache
+C:\Users\SHADY\source\repos\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.sourcelink.json
+C:\Users\SHADY\source\repos\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.dll
+C:\Users\SHADY\source\repos\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\refint\EducationalManagementSystem.dll
+C:\Users\SHADY\source\repos\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.pdb
+C:\Users\SHADY\source\repos\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\EducationalManagementSystem.genruntimeconfig.cache
+C:\Users\SHADY\source\repos\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\ref\EducationalManagementSystem.dll
+C:\Users\SHADY\source\repos\Team-4-project-DEPI\EducationalManagementSystem\obj\Debug\net10.0\Educatio.8B92E029.Up2Date
